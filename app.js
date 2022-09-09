@@ -33,22 +33,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.get("/catalog/login-in", (req, res) => res.render("login_in"));
-app.use(session({
-  cookie:{
-      secure: true,
-      maxAge:60000
-         },
-  secret: 'secret',
-  saveUninitialized: true,
-  resave: false
-  }));
-  
-  app.use(function(req,res,next){
-  if(!req.session){
-      return next(new Error('Oh no')) //handle error
-  }
-  next() //otherwise continue
-  });
+app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
 passport.use(
   new LocalStrategy((username, password, done) => {
     User.findOne({ username: username }, (err, user) => {
