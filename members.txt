@@ -1,0 +1,6 @@
+jolyne
+
+c3yHKL3YABAXARG2
+
+
+mongodb+srv://jolyne:c3yHKL3YABAXARG2@cluster0.1aux3e6.mongodb.net/?retryWrites=true&w=majority

@@ -1,0 +1,48 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #[em Members only].
+
+  h1 Rules :
+  ul
+    li non registered users can only view posts, while the authors names remain anonymous
+    li registered users with no "member" membership can view and create posts, the authors names still anonymous.
+    li members can view and create posts, and view the identity of posts authors.
+    li admin is basically a member + the ability to delete posts.
+  hr
+  hr
+  h2 Posts :
+  hr
+  each post in post_list
+    h5 - #{post.title} :
+    hr
+    p #{post.text} 
+      if (post.edited === "true")
+        p (edited)
+      hr
+      if currentUser 
+        if (currentUser.membership === 'member' )||(currentUser.membership === 'admin')
+          p By #{post.author.username}
+        else 
+          p Anonymous
+      else 
+        p Anonymous
+      if currentUser 
+        if (currentUser.membership === 'admin')
+          p
+            a(href=post.url+'/delete') Delete Post
+      if currentUser&&(currentUser.id === post.author.id)
+        p
+          a(href=post.url+'/update') Edit Post
+    hr
+    hr
+    hr
+        
+
+  else
+    p There are no posts.
+
+  if error
+    p Error getting dynamic content.
+      

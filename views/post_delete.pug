@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1 #{title}:
+  hr 
+  h3 ID:  #{post._id}
+  p #{post.text}
+  
+  p Do you really want to delete this Post By #{post.author.username}?
+    form(method='POST' action='')
+      div.form-group(name='post', required='true', value=post._id)
+      button.btn.btn-primary(type='submit') Delete
