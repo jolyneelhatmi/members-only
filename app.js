@@ -34,7 +34,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.get("/catalog/login-in", (req, res) => res.render("login_in"));
-app.use(session({store: MongoStore.create({ client: db.client }), secret: "cats", resave: false, saveUninitialized: true }));
+app.use(session(
+  {store: MongoStore.create({ mongoUrl: process.env.MONGO_KEY }),
+  secret: "cats",}
+  ));
 passport.use(
   new LocalStrategy((username, password, done) => {
     User.findOne({ username: username }, (err, user) => {
