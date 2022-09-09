@@ -1,9 +1,10 @@
 const createError = require('http-errors');
 const express = require('express');
+const session = require("express-session");
+const MongoStore = require('connect-mongo');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const User = require('./models/user');
@@ -33,7 +34,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.get("/catalog/login-in", (req, res) => res.render("login_in"));
-app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+app.use(session({store: MongoStore.create({ client: db.client }), secret: "cats", resave: false, saveUninitialized: true }));
 passport.use(
   new LocalStrategy((username, password, done) => {
     User.findOne({ username: username }, (err, user) => {
