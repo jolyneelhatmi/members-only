@@ -36,7 +36,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get("/catalog/login-in", (req, res) => res.render("login_in"));
 app.use(session(
   {store: MongoStore.create({ mongoUrl: process.env.MONGO_KEY }),
-  secret: "cats",}
+  secret: "cats",
+  saveUninitialized: false, 
+  resave:false,}
   ));
 passport.use(
   new LocalStrategy((username, password, done) => {
